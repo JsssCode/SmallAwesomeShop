@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="col-6 productblock">
+      <span> Product name: </span> {{product.title}}
+      <div>
+        <small><span>product ID:</span> {{product.id}}</small>
+      </div>
+    </div>
+    <div class="col-6">
+      <img src={{product.images[0].src}}>
+    </div>
+  </div>
+  <div class="row">
+    <h1> Variants of {{product.title}}</h1>
+    <div class="list-group">
+      <div *ngFor="let variant of product.variants" class="list-group-item list-group-item-action flex-column align-items-start">
+          <div class="row">
+            <div class="col-6 variantblock">
+              <h5 class="mb-1"><span> Variant name: </span>{{variant.title}}</h5>
+              <small hidden='true'> <span>variant ID:</span>{{variant.id}}</small>
+              <p class="mb-1"><span> Price: </span>{{variant.price}}</p>
+              <button (click)="addToCard(variant)">Add to card</button>
+            </div>
+            <div class="col-6">
+              <img src={{variant.image.src}}>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

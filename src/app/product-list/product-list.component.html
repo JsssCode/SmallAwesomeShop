@@ -1,0 +1,8 @@
+<div class="row items">
+    <li *ngFor="let product of products" (click)="onSelect(product)">
+      <span>{{product.title}}</span> 
+      <span class="id">{{product.id}} </span>
+      <img src={{product.images[0].src}}>
+      <button (click)="onSelect(product)">Go to the variants</button>
+    </li>
+</div>

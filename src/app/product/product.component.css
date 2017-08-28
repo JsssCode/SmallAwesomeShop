@@ -1,0 +1,11 @@
+img {
+    height: 200px;
+}
+
+.productblock, .variantblock{
+    text-align: left;
+}
+
+span{
+    font-weight: bold;
+}

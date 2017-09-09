@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Card, Variant, LineItem } from './../../shared';
+import { Cart, Variant, LineItem } from './../../shared';
 
 import { BehaviorSubject } from "rxjs";
 
@@ -7,21 +7,21 @@ import { BehaviorSubject } from "rxjs";
 
 export class GlobalService {
 
-    cardObs: BehaviorSubject<Card> = new BehaviorSubject(new Card);
+    cartObs: BehaviorSubject<Cart> = new BehaviorSubject(new Cart);
     lineItemsObs: BehaviorSubject<LineItem[]> = new BehaviorSubject([]);
 
     constructor() {
-        let card = new Card;
-        this.cardObs.next(card);
+        let cart = new Cart;
+        this.cartObs.next(cart);
     }
 
 
-    get card() {
-        return this.cardObs.getValue();
+    get cart() {
+        return this.cartObs.getValue();
     }
 
-    set card(card) {
-        this.cardObs.next(card);
+    set cart(cart) {
+        this.cartObs.next(cart);
     }
 
     set lineItems(lineItems) {
@@ -32,8 +32,8 @@ export class GlobalService {
         return this.lineItemsObs.getValue();
     }
 
-    addItemToCard(variant: Variant) {
-        let quant = prompt("You want to add " + variant.title + " to the card. Please, enter quantity", '1')
+    addItemToCart(variant: Variant) {
+        let quant = prompt("You want to add " + variant.title + " to the cart. Please, enter quantity", '1')
         this.lineItems.push(
             {
                 id: '',
@@ -45,7 +45,7 @@ export class GlobalService {
         this.lineItems = this.lineItems;
     }
 
-    removeItemFromCard(i) {     
+    removeItemFromCart(i) {     
         this.lineItems.splice(i, 1);
     }
 }

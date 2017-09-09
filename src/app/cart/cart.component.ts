@@ -1,21 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { ShopifyService, GlobalService, LineItem, MailingAddress, Card, CheckoutStatus } from './../shared';
-import { addressSample } from './card-data-model';
+import { ShopifyService, GlobalService, LineItem, MailingAddress, Cart, CheckoutStatus } from './../shared';
+import { addressSample } from './cart-data-model';
 
 @Component({
-  selector: 'app-card',
-  templateUrl: './card.component.html',
-  styleUrls: ['./card.component.css']
+  selector: 'app-cart',
+  templateUrl: './cart.component.html',
+  styleUrls: ['./cart.component.css']
 })
 
-export class CardComponent implements OnInit {
+export class CartComponent implements OnInit {
 
-  //card: Card;
-  cardForm: FormGroup;
+  cartForm: FormGroup;
   checkoutButtonTitle: string = 'Create checkout';
   checkoutFromShopify: string;
-
 
   constructor(
     private fb: FormBuilder,
@@ -27,31 +25,31 @@ export class CardComponent implements OnInit {
 
   ngOnInit() {
 
-    const glCard = this.globalService.card;
+    const glCart = this.globalService.cart;
 
-    this.cardForm.reset({
-      id: glCard.id,
-      email: glCard.email,
-      allowPartialAddresses: glCard.allowPartialAddresses,
-      status: glCard.status
+    this.cartForm.reset({
+      id: glCart.id,
+      email: glCart.email,
+      allowPartialAddresses: glCart.allowPartialAddresses,
+      status: glCart.status
     });
 
-    this.setAddress(glCard.shippingAddress);
+    this.setAddress(glCart.shippingAddress);
     this.setLineItems(this.globalService.lineItems);
 
-    if (glCard.status == CheckoutStatus.update){
+    if (glCart.status == CheckoutStatus.update){
       this.checkoutButtonTitle = "Update checkout"
     }
 
   }
 
   ngOnDestroy() {
-    this.globalService.card = this.cardForm.value;
+    this.globalService.cart = this.cartForm.value;
     this.globalService.lineItems = this.lineItems.value;
   }
 
-  get cardId(): string {
-    return this.cardForm.get('id').value;
+  get cartId(): string {
+    return this.cartForm.get('id').value;
   }
 
   setLineItems(lineItems: LineItem[]) {
@@ -60,31 +58,20 @@ export class CardComponent implements OnInit {
 
     const lineItemFormArray = this.fb.array(lineItemFGs);
 
-    this.cardForm.setControl('lineItems', lineItemFormArray);
+    this.cartForm.setControl('lineItems', lineItemFormArray);
 
   }
 
   get lineItems(): FormArray {
-    return this.cardForm.get('lineItems') as FormArray;
+    return this.cartForm.get('lineItems') as FormArray;
   };
 
   createForm() {
-    this.cardForm = this.fb.group({
+    this.cartForm = this.fb.group({
       id: ['',],
       email: ['',],
       shippingAddress: this.fb.group(
         new MailingAddress()
-        /*address1: '',
-        address2: '',
-        city: '',
-        company: '',
-        country: '',
-        firstName: '',
-        lastName: '',
-        phone: '',
-        province: '',
-        zip: '',*/
-
       ),
       allowPartialAddresses: false,
       lineItems: this.fb.array([]),
@@ -95,14 +82,14 @@ export class CardComponent implements OnInit {
 
 
   setAddress(address: MailingAddress) {
-    this.cardForm.setControl('shippingAddress', this.fb.group(address));
+    this.cartForm.setControl('shippingAddress', this.fb.group(address));
   }
 
   createUpdateCheckout() {
 
-   const glCard = this.globalService.card;
+   const glCart = this.globalService.cart;
 
-    if (glCard.status == CheckoutStatus.update) {
+    if (glCart.status == CheckoutStatus.update) {
       let ItemsForAdd = [], ItemsForUpdate = [];
       this.lineItems.value.forEach(element => {
         if (!element.id) {
@@ -113,7 +100,7 @@ export class CardComponent implements OnInit {
       });
 
       if (ItemsForAdd.length) {
-        this.shopifyService.addVariantsToCheckout(this.cardId, ItemsForAdd.map(function (lineItem) {
+        this.shopifyService.addVariantsToCheckout(this.cartId, ItemsForAdd.map(function (lineItem) {
           return {
             'variantId': lineItem.variant.id,
             'quantity': +lineItem.quantity
@@ -132,11 +119,11 @@ export class CardComponent implements OnInit {
           }
 
           this.checkoutButtonTitle = "Update checkout";
-          this.cardForm.get('status').setValue(CheckoutStatus.update);
+          this.cartForm.get('status').setValue(CheckoutStatus.update);
         });
       }
       if (ItemsForUpdate.length) {
-        this.shopifyService.updateCheckout(this.cardId, ItemsForUpdate.map(function (lineItem) {
+        this.shopifyService.updateCheckout(this.cartId, ItemsForUpdate.map(function (lineItem) {
           return {
             'id': lineItem.id,
             'quantity': +lineItem.quantity
@@ -160,11 +147,11 @@ export class CardComponent implements OnInit {
             'quantity': +lineItem.quantity
           }
         }),
-      this.cardForm.get('allowPartialAddresses').value,
-      addressSample).then(({ model, data }) => {
+      this.cartForm.get('allowPartialAddresses').value,
+      this.cartForm.get('shippingAddress').value).then(({ model, data }) => {
         if (!data.checkoutCreate.userErrors.length) {
 
-          this.cardForm.get('id').setValue(
+          this.cartForm.get('id').setValue(
             data.checkoutCreate.checkout.id
           )
 
@@ -179,14 +166,14 @@ export class CardComponent implements OnInit {
             }
           }
           this.checkoutButtonTitle = "Update checkout";
-          this.cardForm.get('status').setValue(CheckoutStatus.update);
+          this.cartForm.get('status').setValue(CheckoutStatus.update);
         }
       }
       )
   }
 
   fetchCheckout() {
-    this.shopifyService.fetchCheckout(this.cardId).then(
+    this.shopifyService.fetchCheckout(this.cartId).then(
       (checkout) => this.checkoutFromShopify = 'id: ' + checkout.id + ';' +
         'lineItems: ' + checkout.lineItems.map(lineItem => lineItem.variant.title + ' ' + lineItem.quantity));
   }
@@ -197,15 +184,15 @@ export class CardComponent implements OnInit {
 
     let errorsLength = 0;
 
-    if (this.cardId) {
-      this.shopifyService.removeLineItem(this.cardId, lineItemId).then(({ model, data }) => {
+    if (this.cartId) {
+      this.shopifyService.removeLineItem(this.cartId, lineItemId).then(({ model, data }) => {
         errorsLength = data.checkoutLineItemsRemove.userErrors.length;
       });
     }
 
     if (!errorsLength) {
       this.lineItems.removeAt(i);
-      this.globalService.removeItemFromCard(i);
+      this.globalService.removeItemFromCart(i);
     }
   }
 

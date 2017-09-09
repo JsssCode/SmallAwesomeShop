@@ -13,7 +13,7 @@ import {
   GlobalService
 } from './shared';
 import { ProductModule } from './product/product.module';
-import { CardComponent } from './card/card.component';
+import { CartComponent } from './cart/cart.component';
 
 const rootRouting: ModuleWithProviders = RouterModule.forRoot([
   {
@@ -21,8 +21,8 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([
     component: ProductListComponent
   },
   {
-    path: 'card',
-    component: CardComponent
+    path: 'cart',
+    component: CartComponent
   },
   {
     path: '',
@@ -37,7 +37,7 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([
     AppComponent,
     HomeComponent,
     ProductListComponent,
-    CardComponent
+    CartComponent
   ],
   imports: [
     BrowserModule,

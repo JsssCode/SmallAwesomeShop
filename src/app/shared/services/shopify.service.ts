@@ -45,6 +45,11 @@ export class ShopifyService {
             variants.add('product');
             variants.add('title');
             variants.add('price');
+            variants.add('image', (image) => {
+            image.add('src');
+            image.add('id');
+            image.add('altText');
+            })
           })
         })
       })

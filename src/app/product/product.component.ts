@@ -20,6 +20,7 @@ export class ProductComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+
     this.route.data.subscribe(
       (data: { product: any }) => {
         this.product = data.product;
@@ -30,19 +31,22 @@ export class ProductComponent implements OnInit {
       im.src = './assets/images/empty-img.png';
       this.product.images.push(new Image());
     }
-    this.product.variants.forEach(element => {
-      if (element.image === undefined) {
-        element.image = new Image();
-        element.image.src = './assets/images/empty-img.png';
+
+    /*this.product.variants.forEach(element => {
+      if (!element.image) {
+        let im = new Image();
+        im.src = './assets/images/empty-img.png';
+        element.image = im;
+        console.log(element.image);
       }
 
-    });
+    });*/
 
   }
 
-  addToCard(variant: Variant){
-    this.globalService.addItemToCard(variant);
+  addToCart(variant: Variant) {
+    this.globalService.addItemToCart(variant);
 
-}
+  }
 
 }

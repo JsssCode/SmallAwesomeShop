@@ -6,7 +6,7 @@ export const enum CheckoutStatus {
     update,
 }
 
-export class Card {
+export class Cart {
     id = '';
     email = '';
     lineItemsGl: LineItem[] = [];

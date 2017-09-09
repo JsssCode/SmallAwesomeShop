@@ -1,5 +1,8 @@
 # SmallAwesomeShop
 
+This is test Angular 4 application w/ Shopify Storefront API. 
+See how it works - https://www.youtube.com/watch?v=aggRpY_5t1o
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.1.2.
 
 ## Development server

@@ -44,7 +44,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Donation
 
-If this project help you reduce time to develop, help me to buy new keyboard :) 
+If this project helps you reduce time of your projects, help me to buy new keyboard :) 
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BHQHZ4FJKNTJN)
 

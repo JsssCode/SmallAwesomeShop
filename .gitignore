@@ -42,3 +42,4 @@ testem.log
 Thumbs.db
 src/app/shared/shared.module.ts
 npm-debug.log.3684627954
+package-lock.json

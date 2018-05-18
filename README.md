@@ -1,6 +1,6 @@
 # SmallAwesomeShop
 
-Example of [graphql-js-client](https://github.com/Shopify/graphql-js-client) usage build with Angular 4.
+Example of [graphql-js-client](https://github.com/Shopify/graphql-js-client) usage build with Angular 5.
 https://www.youtube.com/watch?v=aggRpY_5t1o - how it works.
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.1.2.
 
@@ -41,3 +41,10 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Donation
+
+If this project helps you reduce time of your projects, help me to buy new keyboard :) 
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=K382MCVGXZ2GY&lc=US&no_note=0&cn=Add%20special%20instructions%20to%20the%20seller%3a&no_shipping=2&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
+

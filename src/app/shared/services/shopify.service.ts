@@ -46,9 +46,9 @@ export class ShopifyService {
             variants.add('title');
             variants.add('price');
             variants.add('image', (image) => {
-            image.add('src');
-            image.add('id');
-            image.add('altText');
+              image.add('src');
+              image.add('id');
+              image.add('altText');
             })
           })
         })
@@ -83,15 +83,15 @@ export class ShopifyService {
 
   }
 
-  getProductsInCollection(_collectionId):Promise<Product[]> {
+  getProductsInCollection(_collectionId): Promise<Product[]> {
     let client = this.client;
     let query = client.query((root) => {
-      root.add('node', {args: {id: _collectionId}, alias: 'collection'}, (node) => {
+      root.add('node', { args: { id: _collectionId }, alias: 'collection' }, (node) => {
         node.addInlineFragmentOn('Collection', (collection) => {
-          collection.addConnection('products', {args: {first: 250}}, (products) => {
+          collection.addConnection('products', { args: { first: 250 } }, (products) => {
             products.add('id');
             products.add('title');
-            products.addConnection('images', {args: {first: 250}}, (images) => {
+            products.addConnection('images', { args: { first: 250 } }, (images) => {
               images.add('src');
               images.add('id');
               images.add('altText');
@@ -102,7 +102,7 @@ export class ShopifyService {
     });
 
     return client.send(query).then(({ model, data }) => {
-      return client.fetchAllPages(model.collection.products, {pageSize: 250})
+      return client.fetchAllPages(model.collection.products, { pageSize: 250 })
     });
   }
 
@@ -130,7 +130,8 @@ export class ShopifyService {
       })
     })
 
-    return this.client.send(mutation, { 'input': { lineItems: _lineItems, allowPartialAddresses: _allowPartialAddresses, shippingAddress: _shippingAddress } }).then();
+    return this.client.send(mutation, { 'input': { lineItems: _lineItems, 
+      allowPartialAddresses: _allowPartialAddresses, shippingAddress: _shippingAddress } }).then();
   }
 
   fetchCheckout(_checkoutid): Promise<any> {

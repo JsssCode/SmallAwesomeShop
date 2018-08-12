@@ -24,24 +24,12 @@ export class ProductComponent implements OnInit {
     this.route.data.subscribe(
       (data: { product: any }) => {
         this.product = data.product;
-
       })
     if (this.product.images.length == 0) {
       let im = new Image();
       im.src = './assets/images/empty-img.png';
       this.product.images.push(new Image());
     }
-
-    /*this.product.variants.forEach(element => {
-      if (!element.image) {
-        let im = new Image();
-        im.src = './assets/images/empty-img.png';
-        element.image = im;
-        console.log(element.image);
-      }
-
-    });*/
-
   }
 
   addToCart(variant: Variant) {

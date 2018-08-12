@@ -1,9 +1,11 @@
+
+import {from as observableFrom} from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
+
+
+
 
 import { Product, ShopifyService, ProductService } from '../shared';
 
@@ -20,7 +22,7 @@ export class ProductResolver implements Resolve<Product> {
     state: RouterStateSnapshot
   ): Observable<any> {
     let id = this.productService.getCorrectId(route.params['id']);
-    return Observable.fromPromise(this.shopifyService.getProductById(id)
+    return observableFrom(this.shopifyService.getProductById(id)
       .catch((err) => this.router.navigateByUrl('/')));
 
   }

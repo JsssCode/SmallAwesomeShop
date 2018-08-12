@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cart, Variant, LineItem } from './../../shared';
+import { Cart, Variant, LineItem } from './../models';
 
 import { BehaviorSubject } from "rxjs";
 
